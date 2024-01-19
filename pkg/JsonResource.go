@@ -133,7 +133,9 @@ func (jrb *JSONResourceBundle) MustLoad() []Resource {
 // ParseJSONRuleset accepts a byte array containing an array of rules in JSON format to be parsed into GRule syntax.
 func ParseJSONRuleset(data []byte) (rs string, err error) {
 	var rules []GruleJSON
-	err = json.Unmarshal(data, &rules)
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.UseNumber()
+	err = decoder.Decode(&rules)
 	if err != nil {
 
 		return
@@ -154,7 +156,9 @@ func ParseJSONRuleset(data []byte) (rs string, err error) {
 // ParseJSONRule accepts a byte array containing an rule in JSON format to be parsed into GRule syntax.
 func ParseJSONRule(data []byte) (rs string, err error) {
 	var rule GruleJSON
-	err = json.Unmarshal(data, &rule)
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.UseNumber()
+	err = decoder.Decode(&rule)
 	if err != nil {
 
 		return
